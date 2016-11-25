@@ -4,7 +4,7 @@ server {
     client_max_body_size $MAX_BODY_SIZE;
 
     location / {
-        proxy_pass http://prod;
+        proxy_pass http://ngprod;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         proxy_redirect off;
         proxy_set_header    Host            $host;
@@ -19,7 +19,7 @@ server {
     client_max_body_size $MAX_BODY_SIZE;
 
     location / {
-        proxy_pass http://dev;
+        proxy_pass http://ngdev;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         proxy_redirect off;
         proxy_set_header    Host            $host;
@@ -34,7 +34,7 @@ server {
     client_max_body_size $MAX_BODY_SIZE;
 
     location / {
-        proxy_pass http://stage;
+        proxy_pass http://ngstage;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         proxy_redirect off;
         proxy_set_header    Host            $host;
