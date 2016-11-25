@@ -1,0 +1,44 @@
+server {
+    listen 80;
+    server_name www.${DOMAIN};
+    client_max_body_size ${MAX_BODY_SIZE};
+
+    location / {
+        proxy_pass http://prod;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_redirect off;
+        proxy_set_header    Host            $host;
+        proxy_set_header    X-Real-IP       $remote_addr;
+        proxy_set_header    X-Forwarded-For $proxy_addr_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name dev.${DOMAIN};
+    client_max_body_size ${MAX_BODY_SIZE};
+
+    location / {
+        proxy_pass http://dev;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_redirect off;
+        proxy_set_header    Host            $host;
+        proxy_set_header    X-Real-IP       $remote_addr;
+        proxy_set_header    X-Forwarded-For $proxy_addr_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name staging.${DOMAIN};
+    client_max_body_size ${MAX_BODY_SIZE};
+
+    location / {
+        proxy_pass http://stage;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_redirect off;
+        proxy_set_header    Host            $host;
+        proxy_set_header    X-Real-IP       $remote_addr;
+        proxy_set_header    X-Forwarded-For $proxy_addr_x_forwarded_for;
+    }
+}
